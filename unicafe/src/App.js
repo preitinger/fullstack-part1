@@ -1,5 +1,17 @@
 import { useState } from 'react'
 
+const Button = ({label, onClick}) => {
+  return (
+    <button onClick={onClick}>{label}</button>
+  )
+}
+
+const StatisticLine = ({text, value}) => {
+  return (
+    <div>{text} {value}</div>
+  )
+}
+
 const Statistics = ({good, neutral, bad}) => {
   const all = good + neutral + bad
   // now with the conditional body the guard is actually outdated ;-/
@@ -8,26 +20,24 @@ const Statistics = ({good, neutral, bad}) => {
   const head = (
     <h1>statistics</h1>
   )
+
+
   const body = (
     <>
-    <div>
-      good {good}
-    </div>
-    <div>
-      neutral {neutral}
-    </div>
-    <div>
-      bad {bad}
-    </div>
-    <div>
-      all {all}
-    </div>
-    <div>
-      average {guard((good - bad) / all)}
-    </div>
-    <div>
-      positive {guard(good * 100.0 / all + ' %')}
-    </div>
+    {
+
+      // please forgive me... but I had to try map ;-)
+      [
+        {key: 'good',     value: good                       },
+        {key: 'neutral',  value: neutral                    },
+        {key: 'bad',      value: bad                        },
+        {key: 'average',  value: guard((good - bad) / all)  },
+        {key: 'positive', value: guard(good * 100.0 / all + ' %')},
+      ].map(item =>
+         <StatisticLine key={item.key} text={item.key} value={item.value} />
+      )
+    }
+
     </>
   )
 
@@ -49,9 +59,9 @@ const App = () => {
     <div>
       <h1>give feedback</h1>
       <p>
-        <button onClick={() => setGood(good + 1)}>good</button>
-        <button onClick={() => setNeutral(neutral + 1)}>neutral</button>
-        <button onClick={() => setBad(bad + 1)}>bad</button>
+        <Button onClick={() => setGood(good + 1)} label='good' />
+        <Button onClick={() => setNeutral(neutral + 1)} label='neutral' />
+        <Button onClick={() => setBad(bad + 1)} label='bad' />
       </p>
       <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
