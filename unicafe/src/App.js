@@ -2,29 +2,39 @@ import { useState } from 'react'
 
 const Statistics = ({good, neutral, bad}) => {
   const all = good + neutral + bad
+  // now with the conditional body the guard is actually outdated ;-/
   const guard = x => (all === 0 ? 'not yet available' : x)
+
+  const head = (
+    <h1>statistics</h1>
+  )
+  const body = (
+    <>
+    <div>
+      good {good}
+    </div>
+    <div>
+      neutral {neutral}
+    </div>
+    <div>
+      bad {bad}
+    </div>
+    <div>
+      all {all}
+    </div>
+    <div>
+      average {guard((good - bad) / all)}
+    </div>
+    <div>
+      positive {guard(good * 100.0 / all + ' %')}
+    </div>
+    </>
+  )
 
   return (
     <>
-      <h1>statistics</h1>
-      <div>
-        good {good}
-      </div>
-      <div>
-        neutral {neutral}
-      </div>
-      <div>
-        bad {bad}
-      </div>
-      <div>
-        all {all}
-      </div>
-      <div>
-        average {guard((good - bad) / all)}
-      </div>
-      <div>
-        positive {guard(good * 100.0 / all + ' %')}
-      </div>
+      {head}
+      {all === 0 ? 'No feedback given' : body}
     </>
   )
 }
