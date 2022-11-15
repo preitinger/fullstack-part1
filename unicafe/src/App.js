@@ -8,7 +8,7 @@ const Button = ({label, onClick}) => {
 
 const StatisticLine = ({text, value}) => {
   return (
-    <div>{text} {value}</div>
+    <tr><td>{text}</td><td>{value}</td></tr>
   )
 }
 
@@ -23,7 +23,8 @@ const Statistics = ({good, neutral, bad}) => {
 
 
   const body = (
-    <>
+    <table>
+      <tbody>
     {
 
       // please forgive me... but I had to try map ;-)
@@ -37,8 +38,8 @@ const Statistics = ({good, neutral, bad}) => {
          <StatisticLine key={item.key} text={item.key} value={item.value} />
       )
     }
-
-    </>
+      </tbody>
+    </table>
   )
 
   return (
