@@ -6,6 +6,9 @@ const App = () => {
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
 
+  const all = good + neutral + bad
+  const guard = x => (all === 0 ? 'not yet available' : x)
+
   return (
     <div>
       <h1>give feedback</h1>
@@ -23,6 +26,15 @@ const App = () => {
       </div>
       <div>
         bad {bad}
+      </div>
+      <div>
+        all {all}
+      </div>
+      <div>
+        average {guard((good - bad) / all)}
+      </div>
+      <div>
+        positive {guard(good * 100.0 / all + ' %')}
       </div>
 
     </div>
