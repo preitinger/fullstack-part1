@@ -6,6 +6,20 @@ const Button = ({label, onClick}) => {
   )
 }
 
+const Anecdote = ({header, text, votes}) => {
+  return (
+    <>
+    <div style={{height:'100px'}}>
+      <h1>{header}</h1>
+      {text}
+    </div>
+    <div>
+      has {votes} votes
+    </div>
+    </>
+  )
+}
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -30,16 +44,19 @@ const App = () => {
     setVotes(copy);
   }
 
+  let mostVotes = 0;
+  {
+    for (let i = 1; i < anecdotes.length; ++i) {
+      if (votes[i] > votes[mostVotes]) mostVotes = i;
+    }
+  }
+
   return (
     <>
-    <div style={{height:'100px'}}>
-      {anecdotes[selected]}
-    </div>
-    <div>
-      has {votes[selected]} votes
-    </div>
+    <Anecdote header='Anecdote of the day' text={anecdotes[selected]} votes={votes[selected]} />
     <Button label='vote' onClick={onVote} />
     <Button label='next anecdote' onClick={nextAnecdote} />
+    <Anecdote header='Anecdote with most votes' text={anecdotes[mostVotes]} votes={votes[mostVotes]} />
     </>
   )
 }
